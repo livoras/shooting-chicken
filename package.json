@@ -1,0 +1,17 @@
+{
+  "name": "game",
+  "version": "0.0.1",
+  "description": "Game Example",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "Livoras",
+  "license": "BSD",
+  "dependencies": {
+    "eventemitter2": "~0.4.14"
+  }
+}

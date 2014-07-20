@@ -1,0 +1,1 @@
+browserify test/game.js > dist/main.js && uglifyjs dist/main.js > dist/main.min.js
