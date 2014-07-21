@@ -38,6 +38,10 @@ game.on("init", function() {
     game.add(world)
 })
 
+window.addEventListener("load", function() {
+    FastClick.attach(document.body)
+})
+
 game.on("start", function() {
     pannel.hidePlannel()
     stopPlayAround()
@@ -212,11 +216,14 @@ function score() {
 }
 
 function listenPannelButtons() {
-    document.getElementById("play").addEventListener("mousedown", function() {
+    var play = document.getElementById("play")
+    function start() {
         if (game.isStop) {
             game.start()
         }
-    })
+    }
+    play.addEventListener("touchstart", start)
+    play.addEventListener("mousedown", start)
 }
 
 function renderRecord() {

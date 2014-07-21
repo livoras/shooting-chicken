@@ -12,6 +12,7 @@
   "author": "Livoras",
   "license": "BSD",
   "dependencies": {
-    "eventemitter2": "~0.4.14"
+    "eventemitter2": "~0.4.14",
+    "fastclick": "~1.0.2"
   }
 }
