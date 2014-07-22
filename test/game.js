@@ -1,6 +1,7 @@
 var Game = require("../src/game")
 var Chick = require("../src/chick")
 var dog = require("../src/dog")
+var gun = require("../src/gun")
 var pannel = require("../src/pannel")
 var chickManager = require("../src/chick-manager")
 var localRecord = require("../src/local-record")
@@ -28,14 +29,19 @@ game.on("init", function() {
     drawBackground()
     chickManager.init(canvas)
     resizeCanvas()
+
     listenMouseDown()
     listenResize()
     listenNotCatch()
     listenPannelButtons()
     renderRecord()
     playAround()
+
     dog.init(canvas)
+    gun.init(canvas)
+
     game.add(world)
+    game.add(gun)
 })
 
 window.addEventListener("load", function() {

@@ -11,4 +11,13 @@ function extend(Constructor, prototype) {
     return Sub
 }
 
-exports.extend = extend
+function $(selector) {
+    var doms = document.querySelectorAll(selector)
+    if (doms.length == 1) return doms[0]
+    return doms
+}
+
+module.exports = {
+    extend: extend,
+    $: $
+}
