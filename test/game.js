@@ -1,4 +1,4 @@
-var Game = require("../src/game")
+var Game = require("../lib/game")
 var Chick = require("../src/chick")
 var dog = require("../src/dog")
 var gun = require("../src/gun")

@@ -1,4 +1,4 @@
-var Event = require("./event")
+var Event = require("../lib/event")
 
 var chickImg = new Image()
 chickImg.src = "img/chick.png"

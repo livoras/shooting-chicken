@@ -1,5 +1,5 @@
 var Chick = require("./chick")
-var Event = require("./event")
+var Event = require("../lib/event")
 
 // chickManger is to maintain the objects pool
 // for reducing memory consuming.

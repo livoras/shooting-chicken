@@ -1,5 +1,5 @@
-var $ = require("./util").$
-var Event = require("./event")
+var $ = require("../lib/util").$
+var Event = require("../lib/event")
 var cannonImg = new Image()
 var canvas = null
 var ctx = null
@@ -44,10 +44,11 @@ var dogPrototype = {
             var x = event.touches[0].pageX
             var y = event.touches[0].pageY
             var orginX = canvas.width / 2
-            var orginY = canvas.height - cannonImg.width / 2
+            var orginY = canvas.height - cannonImg.height / 2
             var tan = (x - orginX) / (y - orginY)
-            console.log(Math.atan(tan) * Math.PI / 180)
-            that.angle = -Math.atan(tan) * 180 / Math.PI
+            var newTangle = -Math.atan(tan) * 180 / Math.PI
+            if (Math.abs(newTangle) > 60) return
+            that.angle = newTangle
         })  
     },
     isInCannon: function(x, y) {
