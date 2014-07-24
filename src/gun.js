@@ -40,16 +40,14 @@ var dogPrototype = {
     initMove: function() {
         var that = this
         canvas.addEventListener("touchmove", function(event) {
+            if (!that.isControl) return
             var x = event.touches[0].pageX
             var y = event.touches[0].pageY
-            if (that.isControl) {
-                if (that.touchX < x) {
-                    that.angle -= that.GAP
-                } else if (that.touchX > x) {
-                    that.angle += that.GAP
-                }
-                that.touchX = x
-            }
+            var orginX = canvas.width / 2
+            var orginY = canvas.height - cannonImg.width / 2
+            var tan = (x - orginX) / (y - orginY)
+            console.log(Math.atan(tan) * Math.PI / 180)
+            that.angle = -Math.atan(tan) * 180 / Math.PI
         })  
     },
     isInCannon: function(x, y) {
