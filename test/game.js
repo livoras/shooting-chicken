@@ -44,10 +44,6 @@ game.on("init", function() {
     game.add(gun)
 })
 
-window.addEventListener("load", function() {
-    FastClick.attach(document.body)
-})
-
 game.on("start", function() {
     pannel.hidePlannel()
     stopPlayAround()
