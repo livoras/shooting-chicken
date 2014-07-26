@@ -1,10 +1,9 @@
 var $ = require("../lib/util").$
 var Event = require("../lib/event")
-var cannonImg = new Image()
+var r = require("../lib/r")
 var canvas = null
+var cannonImg = null
 var ctx = null
-
-cannonImg.src = "img/cannon.png"
 
 function DogConstructor() {
     this.ctx = null
@@ -17,6 +16,7 @@ function DogConstructor() {
 var dogPrototype = {
     init: function(cvs) {
         canvas = cvs
+        cannonImg = r.images.get("gun")
         ctx = canvas.getContext("2d")
         this.initControl()
         this.initMove()

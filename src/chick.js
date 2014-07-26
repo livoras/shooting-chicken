@@ -1,16 +1,10 @@
 var Event = require("../lib/event")
+var r = require("../lib/r")
 
-var chickImg = new Image()
-chickImg.src = "img/chick.png"
-
-var chickImg2 = new Image()
-chickImg2.src = "img/chick-2.png"
-
-var dieImg = new Image()
-dieImg.src = "img/die.png"
-
-var catchImg = new Image()
-catchImg.src = "img/catch.png"
+var chickImg
+var chickImg2
+var dieImg
+var catchImg
 
 var gravity = 0.1
 var INIT_VETOR_Y = 5
@@ -102,4 +96,13 @@ var chickPrototype = {
     }
 }
 
-module.exports = Event.extend(Chick, chickPrototype)
+Chick = Event.extend(Chick, chickPrototype)
+
+Chick.init = function() {
+    chickImg = r.images.get("chick")
+    chickImg2 = r.images.get("chick2")
+    dieImg = r.images.get("die")
+    catchImg = r.images.get("chick-in-catch")
+}
+
+module.exports = Chick

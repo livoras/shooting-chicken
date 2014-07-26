@@ -1,5 +1,7 @@
 var Game = require("../lib/game")
+var r = require("../lib/r")
 var Chick = require("../src/chick")
+var Bullet = require("../src/bullet")
 var dog = require("../src/dog")
 var gun = require("../src/gun")
 var pannel = require("../src/pannel")
@@ -37,9 +39,6 @@ game.on("init", function() {
     renderRecord()
     playAround()
 
-    dog.init(canvas)
-    gun.init(canvas)
-
     game.add(world)
     game.add(gun)
 })
@@ -60,6 +59,24 @@ game.on("stop", function() {
     pannel.showPannel()
     playAround()
 })
+
+setupResources()
+
+function setupResources() {
+    r.on("all images loaded", function() {
+        Chick.init()
+        dog.init(canvas)
+        gun.init(canvas)
+        game.init()
+    })
+    r.images.set("bg", "img/bg.png")
+    r.images.set("chick", "img/chick.png")
+    r.images.set("chick2", "img/chick-2.png")
+    r.images.set("die", "img/die.png")
+    r.images.set("chick-in-catch", "img/catch.png")
+    r.images.set("dog", "img/dog.png")
+    r.images.set("gun", "img/cannon.png")
+}
 
 function resetStatus() {
     status.lifes = 5
@@ -108,13 +125,8 @@ function listenNotCatch() {
     })
 }
 
-var bgImg = new Image()
-bgImg.addEventListener("load", function() {
-    game.init()
-})
-bgImg.src = "img/bg.png"
-
 function drawBackground() {
+    var bgImg = r.images.get("bg")
     world = {
         move: function() {
             ctx.save()
@@ -251,6 +263,9 @@ function showDog() {
 function stopToCountLevel() {
     clearInterval(levelTimer)
 }
+
+var b = new Bullet
+game.add(b)
 
 // TESTS, should be removed
 require("./tests")
