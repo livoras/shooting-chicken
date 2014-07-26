@@ -41,10 +41,11 @@ game.on("init", function() {
 
     game.add(world)
     game.add(gun)
+    game.add(new Bullet(100, 100, 2, 2))
 })
 
 game.on("start", function() {
-    pannel.hidePlannel()
+    pannel.hidePannel()
     stopPlayAround()
     pannel.updateStats(status)
     startToThrowChick()
@@ -65,6 +66,7 @@ setupResources()
 function setupResources() {
     r.on("all images loaded", function() {
         Chick.init()
+        Bullet.init(canvas)
         dog.init(canvas)
         gun.init(canvas)
         game.init()
@@ -263,9 +265,6 @@ function showDog() {
 function stopToCountLevel() {
     clearInterval(levelTimer)
 }
-
-var b = new Bullet
-game.add(b)
 
 // TESTS, should be removed
 require("./tests")

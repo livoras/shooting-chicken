@@ -13,7 +13,7 @@ var cacheScore = 0
 var cacheLevel = 0
 var cacheLifes = 0
 
-exports.hidePlannel = function () {
+exports.hidePannel = function () {
     mask.style.display = "none"
     showStats()
     showScore()

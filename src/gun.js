@@ -5,7 +5,7 @@ var canvas = null
 var cannonImg = null
 var ctx = null
 
-function DogConstructor() {
+function GunConstructor() {
     this.ctx = null
     this.angle = 0
     this.MAX_ANGLE = 60
@@ -13,7 +13,7 @@ function DogConstructor() {
     this.GAP = 2
 }
 
-var dogPrototype = {
+var gunPrototype = {
     init: function(cvs) {
         canvas = cvs
         cannonImg = r.images.get("gun")
@@ -64,5 +64,5 @@ var dogPrototype = {
     }
 }
 
-var Dog = Event.extend(DogConstructor, dogPrototype)
-module.exports = new Dog()
+var Gun = Event.extend(GunConstructor, gunPrototype)
+module.exports = new Gun()
