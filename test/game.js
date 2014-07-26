@@ -197,7 +197,7 @@ function listenMouseDown() {
 
 function shootChicks(x, y) {
     if (game.isResume) {
-        chickManager.aliveChicks.forEach(function(chick) {
+        chickManager.alives.forEach(function(chick) {
             if (x > chick.x && 
                 x < chick.x + chick.width &&
                 y > chick.y &&
@@ -251,3 +251,6 @@ function showDog() {
 function stopToCountLevel() {
     clearInterval(levelTimer)
 }
+
+// TESTS, should be removed
+require("./tests")
