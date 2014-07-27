@@ -10,6 +10,8 @@ function GunConstructor() {
     this.angle = 0
     this.MAX_ANGLE = 60
     this.MIN_ANGLE = -60
+    this.originX = 0
+    this.originY = 0
     this.GAP = 2
 }
 
@@ -18,15 +20,21 @@ var gunPrototype = {
         canvas = cvs
         cannonImg = r.images.get("gun")
         ctx = canvas.getContext("2d")
+        this.img = cannonImg
         this.initControl()
         this.initMove()
     },
     move: function() {
+        this.updateOrigin()
         ctx.save()
         ctx.translate(canvas.width / 2, (canvas.height - cannonImg.height * 0.5))
         ctx.rotate(this.angle * Math.PI / 180)
         ctx.drawImage(cannonImg, -cannonImg.width / 2, -cannonImg.height / 2, cannonImg.width, cannonImg.height)
         ctx.restore()
+    },
+    updateOrigin: function() {
+        this.originX = canvas.width / 2
+        this.originY = canvas.height - cannonImg.height / 2
     },
     initControl: function() {
         var that = this
@@ -43,9 +51,9 @@ var gunPrototype = {
             if (!that.isControl) return
             var x = event.touches[0].pageX
             var y = event.touches[0].pageY
-            var orginX = canvas.width / 2
-            var orginY = canvas.height - cannonImg.height / 2
-            var tan = (x - orginX) / (y - orginY)
+            var originX = that.originX
+            var originY = that.originY
+            var tan = (x - originX) / (y - originY)
             var newTangle = -Math.atan(tan) * 180 / Math.PI
             if (Math.abs(newTangle) > 60) return
             that.angle = newTangle

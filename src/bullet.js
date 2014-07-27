@@ -5,12 +5,20 @@ var ctx
 
 function Bullet(x, y, vx, vy) {
     this.vector = new Vector(x, y, vx, vy)
-    this.vector.vx = 10
 }
 
 var BulletMethods = {
+    reset: function(x, y, vx, vy) {
+        this.vector.x = x 
+        this.vector.y = y
+        this.vector.vx = vx
+        this.vector.vy = vy
+    },
     move: function() {
         this.vector.update()
+        if (this.isOutOfBorder()) {
+            this.emit("out of border")
+        }
         this.draw()
     },
     draw: function() {
@@ -22,6 +30,13 @@ var BulletMethods = {
         ctx.fill()
         ctx.closePath()
         ctx.restore()
+    },
+    isOutOfBorder: function() {
+        var vector = this.vector
+        return vector.x < 0 || 
+               vector.x > canvas.width ||
+               vector.y < 0 ||
+               vector.y > canvas.height
     }
 }
 

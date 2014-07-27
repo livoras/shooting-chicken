@@ -6,6 +6,7 @@ var dog = require("../src/dog")
 var gun = require("../src/gun")
 var pannel = require("../src/pannel")
 var chickManager = require("../src/chick-manager")
+var bulletManager = require("../src/bullet-manager")
 var localRecord = require("../src/local-record")
 
 var game = new Game
@@ -41,7 +42,7 @@ game.on("init", function() {
 
     game.add(world)
     game.add(gun)
-    game.add(new Bullet(100, 100, 2, 2))
+    bulletManager.start()
 })
 
 game.on("start", function() {
@@ -49,12 +50,14 @@ game.on("start", function() {
     stopPlayAround()
     pannel.updateStats(status)
     startToThrowChick()
+    bulletManager.start()
     startToCountLevel()
 })
 
 game.on("stop", function() {
     stopToCountLevel()
     stopThrowingChick()
+    bulletManager.stop()
     resetStatus()
     cleanScreen()
     pannel.showPannel()
@@ -66,9 +69,9 @@ setupResources()
 function setupResources() {
     r.on("all images loaded", function() {
         Chick.init()
-        Bullet.init(canvas)
         dog.init(canvas)
         gun.init(canvas)
+        bulletManager.init(canvas, game, gun)
         game.init()
     })
     r.images.set("bg", "img/bg.png")
