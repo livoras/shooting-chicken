@@ -276,4 +276,4 @@ function stopToCountLevel() {
 }
 
 // TESTS, should be removed
-require("./tests")
+// require("./tests")

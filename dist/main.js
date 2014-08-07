@@ -938,8 +938,11 @@ module.exports = bulletManager
 },{"../lib/objects-pool":4,"./bullet":10}],10:[function(require,module,exports){
 var Vector = require("../lib/vector")
 var Event = require("../lib/event")
+var r = require("../lib/r")
 var canvas
 var ctx
+var bulletImg = null
+
 
 function Bullet(x, y, vx, vy) {
     this.vector = new Vector(x, y, vx, vy)
@@ -965,7 +968,8 @@ var BulletMethods = {
         ctx.translate(this.vector.x, this.vector.y)
         ctx.beginPath()
         ctx.arc(0, 0, this.radius, 2 * Math.PI, false)
-        ctx.fillStyle = "#000"
+        var pattern = ctx.createPattern(bulletImg, "repeat")
+        ctx.fillStyle = pattern
         ctx.fill()
         ctx.closePath()
         ctx.restore()
@@ -983,11 +987,12 @@ Bullet = Event.extend(Bullet, BulletMethods)
 Bullet.init = function(cvs) {
     canvas = cvs
     ctx = canvas.getContext("2d")
+    bulletImg = r.images.get("bullet")
 }
 
 module.exports = Bullet
 
-},{"../lib/event":1,"../lib/vector":7}],11:[function(require,module,exports){
+},{"../lib/event":1,"../lib/r":5,"../lib/vector":7}],11:[function(require,module,exports){
 var Chick = require("./chick")
 var ObjectsPool = require("../lib/objects-pool")
 
@@ -1152,7 +1157,7 @@ collision.init = function(_chickManager, _bulletManager, catchAndScore) {
 
 collision.move = function() {
 	chickManager.alives.forEach(function(chick) {
-		if (chick.isCatch) return;
+		if (chick.isCatch || chick.isDie) return;
 		bulletManager.alives.forEach(function(bullet) {
 			if (isChickAndBulletCollision(chick, bullet)) {
 				scoreChick(chick)
@@ -1457,6 +1462,7 @@ function setupResources() {
     r.images.set("chick-in-catch", "img/catch.png")
     r.images.set("dog", "img/dog.png")
     r.images.set("gun", "img/cannon.png")
+    r.images.set("bullet", "img/bullet.png")
 }
 
 function resetStatus() {
@@ -1648,92 +1654,6 @@ function stopToCountLevel() {
 }
 
 // TESTS, should be removed
-require("./tests")
+// require("./tests")
 
-},{"../lib/game":2,"../lib/r":5,"../src/bullet":10,"../src/bullet-manager":9,"../src/chick":12,"../src/chick-manager":11,"../src/collision":13,"../src/dog":14,"../src/gun":15,"../src/local-record":16,"../src/pannel":17,"./tests":21}],19:[function(require,module,exports){
-function assert(msg, statement) {
-    if (arguments.length == 1) {
-        msg = ">>> Anonymous Test"
-        statement = msg
-    }
-    msg = "TEST: " + msg
-    if (statement) {
-        console.log("%c" + msg + " passed", "color: green;")
-    } else {
-        console.log("%c" + msg + " failed", "color: red;")
-    }
-}
-
-exports.assert = assert
-
-},{}],20:[function(require,module,exports){
-var assert = require("./helpers").assert
-var OP = require("../lib/objects-pool")
-var op = new OP
-
-var objs = []
-op.newInstance = function() {
-    var newObj = {}
-    objs.push(newObj)
-    return newObj
-}
-
-// test
-for (var i = 0, len = 100; i < len; i++) {
-    op.acquire()
-}
-assert("Object should has 30 object", op.alives.length + op.deads.length === 30)
-
-// set up
-var deadCount = 0
-op.on("died", function (chick) {
-    assert("chick should not be an undefined", chick !== void 8)
-    deadCount++
-})
-
-var aliveCount = 0
-op.on("alive", function () {
-    aliveCount++
-})
-
-// test
-op.die(null)
-assert("should not die the object that doesn't exist", deadCount === 0)
-
-// test
-op.die(objs[0])
-assert("should die an object", 
-    deadCount === 1 && 
-    op.deads.length === 1 && 
-    op.alives.length == 29
-)
-
-// test
-var dieAll = 0
-op.on("all died", function() {
-    dieAll++
-})
-op.dieAll()
-assert("should die all", 
-    deadCount === 30 &&
-    op.deads.length === 30 &&
-    op.alives.length === 0 &&
-    dieAll === 1
-)
-
-// test
-var aliveAll = 0
-op.on("all alive", function() {
-    aliveAll++
-})
-op.aliveAll()
-assert("should alive all", 
-    aliveCount === 30 &&
-    op.deads.length === 0 &&
-    op.alives.length === 30 &&
-    aliveAll === 1
-)
-
-},{"../lib/objects-pool":4,"./helpers":19}],21:[function(require,module,exports){
-require("./objects-pool.spec")
-},{"./objects-pool.spec":20}]},{},[18])
+},{"../lib/game":2,"../lib/r":5,"../src/bullet":10,"../src/bullet-manager":9,"../src/chick":12,"../src/chick-manager":11,"../src/collision":13,"../src/dog":14,"../src/gun":15,"../src/local-record":16,"../src/pannel":17}]},{},[18])
