@@ -4,6 +4,7 @@ var r = require("../lib/r")
 var canvas = null
 var cannonImg = null
 var ctx = null
+var PARAM = 0.8
 
 function GunConstructor() {
     this.ctx = null
@@ -27,14 +28,14 @@ var gunPrototype = {
     move: function() {
         this.updateOrigin()
         ctx.save()
-        ctx.translate(canvas.width / 2, (canvas.height - cannonImg.height * 0.5))
+        ctx.translate(canvas.width / 2, (canvas.height - cannonImg.height * PARAM))
         ctx.rotate(this.angle * Math.PI / 180)
         ctx.drawImage(cannonImg, -cannonImg.width / 2, -cannonImg.height / 2, cannonImg.width, cannonImg.height)
         ctx.restore()
     },
     updateOrigin: function() {
         this.originX = canvas.width / 2
-        this.originY = canvas.height - cannonImg.height / 2
+        this.originY = canvas.height - cannonImg.height * PARAM
     },
     initControl: function() {
         var that = this
