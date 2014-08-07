@@ -7,6 +7,7 @@ var gun = require("../src/gun")
 var pannel = require("../src/pannel")
 var chickManager = require("../src/chick-manager")
 var bulletManager = require("../src/bullet-manager")
+var collision = require("../src/collision")
 var localRecord = require("../src/local-record")
 
 var game = new Game
@@ -31,6 +32,7 @@ var status = {
 game.on("init", function() {
     drawBackground()
     chickManager.init(canvas)
+    collision.init(chickManager, bulletManager, catchAndScore)
     resizeCanvas()
 
     listenMouseDown()
@@ -42,7 +44,8 @@ game.on("init", function() {
 
     game.add(world)
     game.add(gun)
-    bulletManager.start()
+    game.add(collision)
+
 })
 
 game.on("start", function() {
@@ -218,14 +221,16 @@ function shootChicks(x, y) {
             if (x > chick.x && 
                 x < chick.x + chick.width &&
                 y > chick.y &&
-                y < chick.y + chick.height) {
-                if (!chick.isDie) {
-                    chick.isCatch = true
-                    chick.die()
-                    score()
-                }
-            }
+                y < chick.y + chick.height) catchAndScore(chick)
         })
+    }
+}
+
+function catchAndScore(chick) {
+    if (!chick.isDie) {
+        chick.isCatch = true
+        chick.die()
+        score()
     }
 }
 

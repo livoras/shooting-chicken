@@ -13,6 +13,7 @@ var BulletMethods = {
         this.vector.y = y
         this.vector.vx = vx
         this.vector.vy = vy
+        this.radius = 10
     },
     move: function() {
         this.vector.update()
@@ -25,7 +26,7 @@ var BulletMethods = {
         ctx.save()
         ctx.translate(this.vector.x, this.vector.y)
         ctx.beginPath()
-        ctx.arc(0, 0, 10, 2 * Math.PI, false)
+        ctx.arc(0, 0, this.radius, 2 * Math.PI, false)
         ctx.fillStyle = "#000"
         ctx.fill()
         ctx.closePath()

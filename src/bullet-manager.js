@@ -8,12 +8,11 @@ var cannon
 var timer = null
 
 var SPEED = 10
-var DURATION = 300
+var DURATION = 200
 
 var bulletManager = new ObjectsPool
 
 bulletManager.newInstance = function() {
-    // body...
     var vector = getCurrentVector()
     var bullet = new Bullet(vector.x, vector.y, vector.vx, vector.vy)
     onOutOfBorder(bullet)
@@ -38,9 +37,7 @@ function getCurrentVector() {
 
 function onOutOfBorder(bullet) {
     bullet.on("out of border", function() {
-        game.remove(bullet, function() {
-            bulletManager.die(bullet)
-        })
+        bulletManager.killBullet(bullet)
     })
 }
 
@@ -67,6 +64,12 @@ bulletManager.start = function() {
 bulletManager.stop = function() {
     clearInterval(timer)
     bulletManager.dieAll()
+}
+
+bulletManager.killBullet = function(bullet) {
+    game.remove(bullet, function() {
+        bulletManager.die(bullet)
+    })
 }
 
 module.exports = bulletManager
