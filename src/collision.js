@@ -11,7 +11,7 @@ collision.init = function(_chickManager, _bulletManager, catchAndScore) {
 
 collision.move = function() {
 	chickManager.alives.forEach(function(chick) {
-		if (chick.isCatch) return;
+		if (chick.isCatch || chick.isDie) return;
 		bulletManager.alives.forEach(function(bullet) {
 			if (isChickAndBulletCollision(chick, bullet)) {
 				scoreChick(chick)

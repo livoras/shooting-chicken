@@ -1,7 +1,10 @@
 var Vector = require("../lib/vector")
 var Event = require("../lib/event")
+var r = require("../lib/r")
 var canvas
 var ctx
+var bulletImg = null
+
 
 function Bullet(x, y, vx, vy) {
     this.vector = new Vector(x, y, vx, vy)
@@ -27,7 +30,8 @@ var BulletMethods = {
         ctx.translate(this.vector.x, this.vector.y)
         ctx.beginPath()
         ctx.arc(0, 0, this.radius, 2 * Math.PI, false)
-        ctx.fillStyle = "#000"
+        var pattern = ctx.createPattern(bulletImg, "repeat")
+        ctx.fillStyle = pattern
         ctx.fill()
         ctx.closePath()
         ctx.restore()
@@ -45,6 +49,7 @@ Bullet = Event.extend(Bullet, BulletMethods)
 Bullet.init = function(cvs) {
     canvas = cvs
     ctx = canvas.getContext("2d")
+    bulletImg = r.images.get("bullet")
 }
 
 module.exports = Bullet

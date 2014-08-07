@@ -84,6 +84,7 @@ function setupResources() {
     r.images.set("chick-in-catch", "img/catch.png")
     r.images.set("dog", "img/dog.png")
     r.images.set("gun", "img/cannon.png")
+    r.images.set("bullet", "img/bullet.png")
 }
 
 function resetStatus() {
